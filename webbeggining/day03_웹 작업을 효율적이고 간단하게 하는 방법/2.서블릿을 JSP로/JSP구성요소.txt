@@ -1,0 +1,35 @@
+[ JSP 구성요소 ]
+
+1. HTML( Fixed Template Data )
+
+2. JSP Element 
+   (1) 기본  
+       1) 지시어 ( Directive Element )
+          <%@	%>
+          <%@page  contentType=" " import="필요한 패키지"(서블릿관련패키지는 자동으로 임포트)  %>
+
+       2) 스크립팅원소( Scripting Element )
+          	<1> 스크립트렛( Scriptlet )
+	      <%	  %>
+	      <% 서블릿의 service() 메소드를 오버라이딩(service() 선언은 자동) %>
+
+	<2> 식( Expression )
+                  <%=  %>
+	      <%= html태그의 속성값을 자바에서 가져올 때 %>
+
+	<3> 선언 ( Declarelation )
+	      <%!	  %>
+	      <%! 멤버변수, jspInit(), jspDestroy() 를 선언, 오버라이딩 %>
+
+       3) 액션( JSP Action ) == JSP표준태그 
+          <jsp:XXX />
+
+   (2) 고급  
+       1) JSTL ( Java Standard Tag Lib )
+          <c:XXX />
+       2) EL ( Expression Language )
+          ${}
+
+       cf) CTL ( Custom Tag Lib )
+
+jsp가 자동으로 해주는것:

@@ -1,0 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+import="javax.naming.*, javax.sql.*, java.sql.*"%>
+<center>
+<h2> Connection Obj from DBCP</h2>
+<%
+Context initContext = new InitialContext();
+Context envContext  = (Context)initContext.lookup("java:/comp/env");
+DataSource ds = (DataSource)envContext.lookup("jdbc/myoracle");
+Connection conn = ds.getConnection();
+%>
+</center>

@@ -1,0 +1,17 @@
+< 데이터 포멧 >
+(1) JSON 
+var json = {"books": [ {"title":"자바", "author":홍길동", "price":1000}, {"title":"오라클", "author":"이순신", "price":2000} ] }
+
+(2) XML 
+<books>
+    <book>
+        <title>자바</title>
+        <author>홍길동</author>
+        <price>1000</price>
+    </book>
+    <book>
+        <title>오라클</title>
+        <author>이순신</author>
+        <price>2000</price>
+    </book>
+</books>

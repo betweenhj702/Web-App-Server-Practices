@@ -1,0 +1,5 @@
+package soo.dbcp;
+
+public class DbcpBean {
+
+}

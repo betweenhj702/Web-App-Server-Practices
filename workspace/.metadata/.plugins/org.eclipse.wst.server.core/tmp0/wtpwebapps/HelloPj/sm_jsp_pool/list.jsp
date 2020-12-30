@@ -1,0 +1,72 @@
+<%@page contentType="text/html;charset=utf-8" import="java.sql.*" %>
+<jsp:useBean id="pool" class="soo.db.ConnectionPoolBean" scope="application"/>
+
+<head>
+<meta charset='utf-8'>
+<title>Simple Board with jsp and  POOL  </title>
+<style>table,th,td{border:1px solid black;border-collapse:collapse}th,td{padding:5px}a{text-decoration:none}</style>
+</head>
+<body>
+<center>
+<hr width='600' size='2' noshade>
+<h2>Simple Board with JSP and Pool</h2>
+&nbsp;&nbsp;&nbsp;
+<a href='write_jsp.html'>글쓰기</a>
+&nbsp;&nbsp;&nbsp;
+<a href='../'>인덱스</a>
+<hr width='600' size='2' noshade>
+</center>
+<table border='1' width='600' align='center' cellpadding='2'>
+<tr>
+<th align='center' width='10%'>글번호</th>
+<th align='center' width='15%'>작성자</th>
+<th align='center' width='30%'>이메일</th>
+<th align='center' width='30%'>글제목</th>
+<th align='center' width='15%'>날짜</th>
+</tr>
+
+<%
+		Connection con = null;
+		Statement stmt =null;
+		ResultSet rs = null;
+		String sql = "select * from BOARD order by SEQ desc";
+		try{
+			con = pool.getConnection();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			boolean flag = false;
+			while(rs.next()){
+				flag = true;
+				int seq = rs.getInt(1);
+				String writer = rs.getString(2);
+				String email = rs.getString(3);
+				String subject = rs.getString(4);
+				Date rdate = rs.getDate(6);
+%>
+				<tr>
+				<td align='center'><%=seq%></td>
+				<td align='center'><%=writer%></td>
+				<td align='center'><%=email%></td>
+				<td align='center'>
+				<a href='content.jsp?seq=<%=seq%>'><%=subject%></a>
+				</td>
+				<td align='center'><%=rdate%></td>
+				</tr>
+<%
+			}
+			if(!flag){
+					out.println("<tr>");
+					out.println("<td colspan='5' align='center'>데이터 없음</a>");
+					out.println("</tr>");
+				}
+			}catch(SQLException se){
+			}finally{
+				try{
+					if(rs != null) rs.close();
+					if(stmt != null) stmt.close();
+					if(con != null) pool.returnConnection(con);
+				}catch(SQLException se){}
+			}
+%>
+
+</body>
