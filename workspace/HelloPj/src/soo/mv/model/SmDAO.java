@@ -1,6 +1,12 @@
 package soo.mv.model;
 
 import java.sql.*;
+import java.sql.Date;
+import java.util.*;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 public class SmDAO 
 {
@@ -47,6 +53,7 @@ public class SmDAO
 	}
 
 	public SmDTO selectCon(int seq){
+		SmDTO dto = null;
 		Connection con = null;
 		PreparedStatement pstmt= null;
 		ResultSet rs = null;
@@ -62,7 +69,7 @@ public class SmDAO
 			String subject = rs.getString(4);
 			String content = rs.getString(5);
 
-			SmDTO dto = new SmDTO(seq, writer, email, subject, content);
+			dto = new SmDTO(seq, writer, email, subject, content);
 			
 		}catch(SQLException se){
 		}finally{
@@ -101,10 +108,10 @@ public class SmDAO
 		try{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, dto.writer);
-			pstmt.setString(2, dto.email);
-			pstmt.setString(3, dto.subject);
-			pstmt.setString(4, dto.content);
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setString(2, dto.getEmail());
+			pstmt.setString(3, dto.getSubject());
+			pstmt.setString(4, dto.getContent());
 			pstmt.executeUpdate();
 		}catch(SQLException se){
 		}finally{
@@ -117,6 +124,7 @@ public class SmDAO
 	}
 
 	public SmDTO selUpCon(int seq){
+		SmDTO dto=null;
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
@@ -125,13 +133,13 @@ public class SmDAO
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, seq);
-			rs = pstmt1.executeQuery();
+			rs = pstmt.executeQuery();
 			rs.next();
 			String writer = rs.getString(2);
 			String email = rs.getString(3);
 			String subject = rs.getString(4);
 			String content = rs.getString(5);
-			SmDTO dto = new SmDTO(seq, writer, email, subject, content);
+			dto = new SmDTO(seq, writer, email, subject, content);
 		
 		}catch(SQLException se){
 		}finally{
@@ -152,10 +160,10 @@ public class SmDAO
 		try{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, dto.writer);
-			pstmt.setString(2, dto.email);
-			pstmt.setString(3, dto.subject);
-			pstmt.setString(4, dto.content);
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setString(2, dto.getEmail());
+			pstmt.setString(3, dto.getSubject());
+			pstmt.setString(4, dto.getContent());
 			pstmt.setInt(5, seq);
 			pstmt.executeUpdate();
 			
