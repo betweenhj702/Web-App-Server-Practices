@@ -17,6 +17,7 @@
 		   	<a href="sm_jsp_dbcp/list.jsp">게시판</a>(JSP dbcp)<br/>
 		   	
 		   	<a href="addr_mv/list.jsp">주소록</a>(jsp, dbcp in Model1)<br/>
+			<a href="sm_mv/list.jsp">게시판</a>(jsp, dbcp in Model1)<br/>
 		   </p>
 		</div>
 </body>
