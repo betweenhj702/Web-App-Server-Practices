@@ -1,0 +1,13 @@
+package mvc.domain;
+
+import java.sql.Date;
+
+public class Address {
+	private int seq;
+	private String name;
+	private String addr;
+	private Date rdate;
+	
+	public Address() {}
+	
+}

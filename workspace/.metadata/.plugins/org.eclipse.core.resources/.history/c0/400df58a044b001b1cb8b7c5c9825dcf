@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="MvcPj">
+        <property name="context-root" value="MvcPj"/>
+        <property name="java-output-path" value="/MvcPj/build/classes"/>
+    </wb-module>
+</project-modules>

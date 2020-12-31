@@ -1,0 +1,8 @@
+package addr.mvc.model;
+
+class AddrSQL {
+	static final String LIST = "";
+	static final String INSERT = "";
+	static final String DEL="";
+	static final String DEL_ALL="";
+}

@@ -1,0 +1,31 @@
+package addr.mvc.model;
+
+import java.util.ArrayList;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import mvc.domain.Address;
+
+class AddrDAO {
+	private DataSource ds;
+	AddrDAO(){
+		try {
+			Context initContext = new InitialContext();
+		    Context envContext  = (Context)initContext.lookup("java:/comp/env");
+		    ds = (DataSource)envContext.lookup("jdbc/myoracle");
+		}catch(NamingException ne) {
+		}
+	}
+	ArrayList<Address> list(){
+		return null;
+	}
+	void insert(Address dto) {
+		
+	}
+	boolean del(int seq) {
+		return false;
+	}
+}
