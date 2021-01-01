@@ -1,0 +1,5 @@
+package sm.mvc.control;
+
+public class SmController {
+
+}

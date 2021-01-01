@@ -11,7 +11,7 @@
 		<h1>MvcPj INDEX(한글)</h1>
 		<p>
 			<a href="addr/addr.do">주소록(MVC)</a><br/>
-		 
+		 	<a href="sm/sm.do">게시판(MVC)</a><br/>
 		</p>
 		</div>
 </body>

@@ -1,14 +1,18 @@
 package sm.mvc.model;
 
+import java.util.ArrayList;
+
+import mvc.domain.Board;
+
 public class SmService {
 
-	private SmDAO;
+	private SmDAO dao;
 	private static final SmService instance = new SmService();
 	private SmService(){
 		dao = new SmDAO();
 	}
 	public static SmService getInstance(){
-		return instance(); 
+		return instance; 
 	}
 
 	public ArrayList<Board> listS(){
@@ -33,5 +37,6 @@ public class SmService {
 
 	public void updateS(Board dto){
 		dao.update(dto);
+		dao.selectCon(dto.getSeq());
 	}
 }

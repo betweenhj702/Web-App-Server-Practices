@@ -8,6 +8,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import mvc.domain.Board;
+
 import static sm.mvc.model.SmSQL.*;
 
 class SmDAO 
@@ -168,7 +170,7 @@ class SmDAO
 			pstmt.setString(2, dto.getEmail());
 			pstmt.setString(3, dto.getSubject());
 			pstmt.setString(4, dto.getContent());
-			pstmt.setInt(5, dto.getSeq);
+			pstmt.setInt(5, dto.getSeq());
 			pstmt.executeUpdate();
 		}catch(SQLException se){
 		}finally{

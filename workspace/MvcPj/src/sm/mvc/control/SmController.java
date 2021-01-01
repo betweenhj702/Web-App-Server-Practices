@@ -1,6 +1,9 @@
 package sm.mvc.control;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,13 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mvc.domain.Board;
+import sm.mvc.model.SmService;
 
-@WebServlet("sm/sm.do")
+@WebServlet("/sm/sm.do")
 public class SmController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void service(HttpServletRequest requset, HttpServletResponse response)
+	public void service(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		
 		String m = request.getParameter("m");
@@ -28,15 +32,15 @@ public class SmController extends HttpServlet {
 				write(response);
 			}else if(m.equals("insert")){
 				insert(request, response);
-			}else if(m.equals("upSelCon")){
-				upSelCon(request,response);
+			}else if(m.equals("selUpCon")){
+				selUpCon(request,response);
 			}else if(m.equals("update")){
 				update(request,response);
 			}else{
 				list(request, response);
 			}
 		}else{
-			list(requset, response);
+			list(request, response);
 		}
 	}
 	private void list(HttpServletRequest request, HttpServletResponse response)
@@ -122,7 +126,7 @@ public class SmController extends HttpServlet {
 		response.sendRedirect("sm.do");
 	}
 
-	private void upSelCon(HttpServletRequest request, HttpServletResponse response)
+	private void selUpCon(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException{
 		int seq = -1;
 		String seqStr = request.getParameter("seq");
@@ -142,10 +146,10 @@ public class SmController extends HttpServlet {
 		}
 		
 		SmService service = SmService.getInstance();
-		Board upSelCon = service.upSelConS(seq);
-		request.setAttribute("upSelCon", upSelCon);
+		Board selUpCon = service.selUpConS(seq);
+		request.setAttribute("selUpCon", selUpCon);
 		//¾Ë·µ?
-		String view = "upcontent.jsp"
+		String view = "upcontent.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(view);
 		rd.forward(request, response);
 	}
@@ -177,9 +181,6 @@ public class SmController extends HttpServlet {
 		
 		SmService service = SmService.getInstance();
 		service.updateS(dto);
-
-		String view = "content.jsp";
-		RequestDispatcher rd = request.getRequestDispatcher(view);
-		rd.forward(request, response);
+		response.sendRedirect("sm.do");
 	}
 }

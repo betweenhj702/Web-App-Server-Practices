@@ -1,0 +1,8 @@
+package mvc.domain;
+
+import java.sql.*;
+
+public class Board{
+	
+}
+
