@@ -23,12 +23,12 @@ public class SmService {
 		return dao.selectCon(seq);
 	}
 	
-	public void deleteS(int seq){
-		dao.delete(seq);
+	public int deleteS(int seq){
+		return dao.delete(seq);
 	}
 
-	public void insertS(Board dto){
-		dao.insert(dto);
+	public int insertS(Board dto){
+		return dao.insert(dto);
 	}
 
 	public Board selUpConS(int seq){

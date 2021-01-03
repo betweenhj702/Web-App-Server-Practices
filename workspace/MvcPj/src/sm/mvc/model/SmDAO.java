@@ -47,6 +47,7 @@ class SmDAO
 				list.add(dto);
 			}
 		}catch(SQLException se){
+			return null;
 		}finally{
 			try{
 				if(rs != null) rs.close();
@@ -76,8 +77,9 @@ class SmDAO
 			String content = rs.getString(5);
 
 			dto = new Board(seq, writer, email, subject, content);
-			
+			return dto;
 		}catch(SQLException se){
+			return null;
 		}finally{
 			try{
 				if(rs != null) rs.close();
@@ -85,19 +87,22 @@ class SmDAO
 				if(con != null) con.close();
 			}catch(SQLException se){}
 		}
-		return dto;
+		
 	}
 
-	void delete(int seq){
+	int delete(int seq){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		String sql = DELETE;
+		int result = 0;
 		try{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, seq);
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
+			return result;
 		}catch(SQLException se){
+			return -1;
 		}finally{
 			try{
 				if(pstmt != null) pstmt.close();
@@ -111,6 +116,7 @@ class SmDAO
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		String sql = INSERT;
+		int result = 0;
 		try{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);
@@ -118,8 +124,10 @@ class SmDAO
 			pstmt.setString(2, dto.getEmail());
 			pstmt.setString(3, dto.getSubject());
 			pstmt.setString(4, dto.getContent());
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
+			return result;
 		}catch(SQLException se){
+			return -1;
 		}finally{
 			try{
 				if(pstmt != null) pstmt.close();
@@ -146,8 +154,9 @@ class SmDAO
 			String subject = rs.getString(4);
 			String content = rs.getString(5);
 			dto = new Board(seq, writer, email, subject, content);
-		
+			return dto;
 		}catch(SQLException se){
+			return null;
 		}finally{
 			try{
 				if(rs != null) rs.close();
@@ -156,7 +165,7 @@ class SmDAO
 			}catch(SQLException se){
 			}
 		}
-		return dto;
+		
 	}
 
 	void update(Board dto){
