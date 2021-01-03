@@ -35,8 +35,7 @@ public class SmService {
 		return dao.selUpCon(seq);
 	}
 
-	public void updateS(Board dto){
-		dao.update(dto);
-		dao.selectCon(dto.getSeq());
+	public int updateS(Board dto){
+		return dao.update(dto);
 	}
 }

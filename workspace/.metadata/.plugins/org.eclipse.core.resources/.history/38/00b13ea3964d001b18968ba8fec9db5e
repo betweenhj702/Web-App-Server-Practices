@@ -1,0 +1,12 @@
+<%@page contentType="text/html;charset=utf-8" %>
+
+<%
+	String msg = (String) request.getAttribute("msg");
+%>
+<script language="javascript">
+	var msg = <%=msg%>;
+	if(msg == "wrongAccess"){
+		alert("올바른 접근이 아닙니다");
+	}
+	location.href="sm.do";
+</script>

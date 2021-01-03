@@ -50,7 +50,7 @@ public class SmController extends HttpServlet {
 		ArrayList<Board> list = service.listS();
 		if(list == null){
 			String msg = "sqlException";
-			goMsgAlert(msg);
+			goMsgAlert(msg, request, response);
 		}
 		request.setAttribute("list", list);
 
@@ -70,7 +70,7 @@ public class SmController extends HttpServlet {
 			Board selectCon = service.selectConS(seq);
 			if(selectCon == null){
 				String msg = "sqlException";
-				goMsgAlert(msg);
+				goMsgAlert(msg, request, response);
 			}
 			request.setAttribute("selectCon", selectCon);
 	
@@ -80,7 +80,7 @@ public class SmController extends HttpServlet {
 		
 		}else {
 			String msg = "wrongAccess";
-			goMsgAlert(msg);
+			goMsgAlert(msg, request, response);
 		}
 	}
   
@@ -94,14 +94,14 @@ public class SmController extends HttpServlet {
 			int result = service.deleteS(seq);
 			if(result != -1){
 				String msg = "delete";
-				goMsgAlert(msg);
+				goMsgAlert(msg, request, response);
 			}else{
 				String msg = "sqlException";
-				goMsgAlert(msg);
+				goMsgAlert(msg, request, response);
 			}
 		}else{
 			String msg = "wrongAccess";
-			goMsgAlert(msg);
+			goMsgAlert(msg, request, response);
 		}
 	}
 	
@@ -122,10 +122,10 @@ public class SmController extends HttpServlet {
 		int result = service.insertS(dto);
 		if(result != -1){
 			String msg = "insert";
-			goMsgAlert(msg);
+			goMsgAlert(msg, request, response);
 		}else{
 			String msg = "sqlException";
-			goMsgAlert(msg);
+			goMsgAlert(msg, request, response);
 		}
 	}
 
@@ -140,7 +140,7 @@ public class SmController extends HttpServlet {
 			Board selUpCon = service.selUpConS(seq);
 			if(selUpCon == null){
 				String msg = "sqlException";
-				goMsgAlert(msg);
+				goMsgAlert(msg, request, response);
 			}
 			request.setAttribute("selUpCon", selUpCon);
 			
@@ -150,7 +150,7 @@ public class SmController extends HttpServlet {
 
 		}else{
 			String msg = "wrongAccess";
-			goMsgAlert(msg);
+			goMsgAlert(msg, request, response);
 		}
 	}
 
@@ -168,12 +168,18 @@ public class SmController extends HttpServlet {
 			Board dto = new Board(seq, writer, email, subject, content);
 			
 			SmService service = SmService.getInstance();
-			service.updateS(dto);
-			response.sendRedirect("sm.do");
-		
+			int result = service.updateS(dto);
+			if(result != -1) {
+				request.setAttribute("seq", seq);
+				String msg = "update";
+				goMsgAlert(msg, request, response);
+			}else {
+				String msg = "sqlException";
+				goMsgAlert(msg, request, response);
+			}
 		}else{
 			String msg = "wrongAccess";
-			goMsgAlert(msg);
+			goMsgAlert(msg, request, response);
 		}
 	}
 	
@@ -193,7 +199,8 @@ public class SmController extends HttpServlet {
 		}
 		return -1;
 	}
-	private void goMsgAlert(String msg){
+	private void goMsgAlert(String msg, HttpServletRequest request,HttpServletResponse response)
+	throws IOException, ServletException{
 		request.setAttribute("msg", msg);
 		String view = "msgAlert.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(view);

@@ -112,7 +112,7 @@ class SmDAO
 		}
 	}
 
-	void insert(Board dto){
+	int insert(Board dto){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		String sql = INSERT;
@@ -168,10 +168,11 @@ class SmDAO
 		
 	}
 
-	void update(Board dto){
+	int update(Board dto){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		String sql = UPDATE;
+		int result = 0;
 		try{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);
@@ -180,8 +181,10 @@ class SmDAO
 			pstmt.setString(3, dto.getSubject());
 			pstmt.setString(4, dto.getContent());
 			pstmt.setInt(5, dto.getSeq());
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
+			return result;
 		}catch(SQLException se){
+			return -1;
 		}finally{
 			try{
 				if(pstmt != null) pstmt.close();
