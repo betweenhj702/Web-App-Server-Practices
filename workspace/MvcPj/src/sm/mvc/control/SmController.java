@@ -9,9 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import mvc.domain.Board;
 import sm.mvc.model.SmService;
+import sm.mvc.vo.ListResult;
 
 @WebServlet("/sm/sm.do")
 public class SmController extends HttpServlet {
@@ -45,7 +47,7 @@ public class SmController extends HttpServlet {
 	}
 	private void list(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException{
-		
+		HttpSession session = request.getSession(true);
 		String cpStr = request.getParameter("cp");
 		String psStr = request.getParameter("ps");
 		int cp = 1;
@@ -90,6 +92,8 @@ public class SmController extends HttpServlet {
 
 		SmService service = SmService.getInstance();
 		ListResult listResult = service.getListResult(cp, ps);
+
+			//System.out.println(listResult.getTotalCount());
 		if(listResult == null){
 			String msg = "sqlException";
 			goMsgAlert(msg, request, response);

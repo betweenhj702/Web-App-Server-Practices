@@ -1,5 +1,6 @@
-<%@page contentType="text/html;charset=utf-8" import="java.util.*, mvc.domain.Board" %>
-
+<%@page contentType="text/html;charset=utf-8" import="java.util.*, mvc.domain.Board, sm.mvc.vo.ListResult" %>
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset='utf-8'>
 <title>Simple Board with jsp and dbcp in MVC</title>
@@ -10,18 +11,18 @@
 <hr width='600' size='2' noshade>
 <h2>Simple Board with JSP and dbcp in MVC</h2>
 &nbsp;&nbsp;&nbsp;
-<a href='sm.do?m=write'>±Û¾²±â</a>
+<a href='sm.do?m=write'>ê¸€ì“°ê¸°</a>
 &nbsp;&nbsp;&nbsp;
-<a href='../'>ÀÎµ¦½º</a>
+<a href='../'>ì¸ë±ìŠ¤</a>
+
 <hr width='600' size='2' noshade>
-</center>
 <table border='1' width='600' align='center' cellpadding='2'>
 <tr>
-<th align='center' width='10%'>±Û¹øÈ£</th>
-<th align='center' width='15%'>ÀÛ¼ºÀÚ</th>
-<th align='center' width='30%'>ÀÌ¸ŞÀÏ</th>
-<th align='center' width='30%'>±ÛÁ¦¸ñ</th>
-<th align='center' width='15%'>³¯Â¥</th>
+<th align='center' width='10%'>ê¸€ë²ˆí˜¸</th>
+<th align='center' width='15%'>ì‘ì„±ì</th>
+<th align='center' width='30%'>ì´ë©”ì¼</th>
+<th align='center' width='30%'>ê¸€ì œëª©</th>
+<th align='center' width='15%'>ë‚ ì§œ</th>
 </tr>
 
 <%
@@ -39,21 +40,28 @@
 			</td>
 			<td align='center'><%=dto.getRdate()%></td>
 			</tr>
+		
 <%
 			}
-		}else{		
+%>
+		</table>
+<%			
+	}else{		
 %>
 			<tr>
-				<td align='center' colspan='5'>µ¥ÀÌÅÍ°¡ ÇÏ³ªµµ ¾øÀ½</td>
+				<td align='center' colspan='5'>ë°ì´í„° ì—†ìŒ</td>
 			</tr>
-		</table>
-<%
-		}
-	int total = listResult.getTotalPageCount();
-%>
+
 <hr width='600' size='2' color='gray' noshade>
-<font color='gray' size='3' face='ÈŞ¸ÕÆíÁöÃ¼'>
-    (ÃÑÆäÀÌÁö¼ö : <%=totalP%>)
+<%
+	}
+	
+	long totalP = listResult.getTotalPageCount();
+%>
+
+
+<font color='gray' size='3' face='íœ´ë¨¼í¸ì§€ì²´'>
+    (ì´í˜ì´ì§€ìˆ˜ : <%=totalP%>)
     &nbsp;&nbsp;&nbsp;
     
 <%
@@ -62,23 +70,13 @@
 		if(i == cp){
 %>
 			<a href="sm.do?cp=<%=i%>">
-				
-					
-
 				<strong><%=i%></strong>
-					
-				
 			</a>&nbsp;
 <%
 		}else{
 %>
 			<a href="sm.do?cp=<%=i%>">
-				
-					
-
-						<%=i%>
-					
-				
+				<%=i%>
 			</a>&nbsp;
 <%
 		}
@@ -88,17 +86,11 @@
     ( TOTAL : <%=listResult.getTotalCount()%> )
     
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       ÆäÀÌÁö ½ÎÀÌÁî : 
+     í˜ì´ì§€ ì‹¸ì´ì¦ˆ : 
     <select id="psId" name="ps" onchange="f(this)">
-    	
-    		
-    		   <option value="3" selected>3</option>
-		       <option value="5">5</option>
-		       <option value="10">10</option>
-    		
-    		
-    		
-    	
+   		   <option value="3">3</option>
+	       <option value="5">5</option>
+	       <option value="10">10</option>
     </select>
     
     <script language="javascript">
@@ -109,9 +101,8 @@
            location.href="sm.do?ps="+ps;
        }
     </script>
-    
 </font>
 <hr width='600' size='2' color='gray' noshade>
-    
 </center>
 </body>
+</html>

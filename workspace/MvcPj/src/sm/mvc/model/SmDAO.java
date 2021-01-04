@@ -61,7 +61,7 @@ class SmDAO
 		
 		ArrayList<Board> list = new ArrayList<Board>();
 		Connection con = null;
-		Statement pstmt =null;
+		PreparedStatement pstmt =null;
 		ResultSet rs = null;
 		String sql = LISTP;
 		int initRow = (page-1)*pageSize;
@@ -69,24 +69,25 @@ class SmDAO
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, initRow);
-			pstmt.setInt(2, initRow + pageSize);
+			pstmt.setInt(2, (initRow + pageSize));
 			rs = pstmt.executeQuery();
 			while(rs.next()){
-				int seq = rs.getInt(1);
-				String writer = rs.getString(2);
-				String email = rs.getString(3);
-				String subject = rs.getString(4);
-				Date rdate = rs.getDate(6);
+				int seq = rs.getInt(2);
+				String writer = rs.getString(3);
+				String email = rs.getString(4);
+				String subject = rs.getString(5);
+				Date rdate = rs.getDate(7);
 				
 				Board dto = new Board(seq, writer, email, subject, rdate);
 				list.add(dto);
 			}
 		}catch(SQLException se){
+			se.printStackTrace();
 			return null;
 		}finally{
 			try{
 				if(rs != null) rs.close();
-				if(stmt != null) stmt.close();
+				if(pstmt != null) pstmt.close();
 				if(con != null) con.close();
 			}catch(SQLException se){}
 		}
