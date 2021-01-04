@@ -57,7 +57,41 @@ class SmDAO
 		}
 		return list;
 	}
-
+	ArrayList<Board> list(int page, int pageSize){
+		
+		ArrayList<Board> list = new ArrayList<Board>();
+		Connection con = null;
+		Statement pstmt =null;
+		ResultSet rs = null;
+		String sql = LISTP;
+		int initRow = (page-1)*pageSize;
+		try{
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, initRow);
+			pstmt.setInt(2, initRow + pageSize);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				int seq = rs.getInt(1);
+				String writer = rs.getString(2);
+				String email = rs.getString(3);
+				String subject = rs.getString(4);
+				Date rdate = rs.getDate(6);
+				
+				Board dto = new Board(seq, writer, email, subject, rdate);
+				list.add(dto);
+			}
+		}catch(SQLException se){
+			return null;
+		}finally{
+			try{
+				if(rs != null) rs.close();
+				if(stmt != null) stmt.close();
+				if(con != null) con.close();
+			}catch(SQLException se){}
+		}
+		return list;
+	}
 	Board selectCon(int seq){
 		
 		Board dto = null;

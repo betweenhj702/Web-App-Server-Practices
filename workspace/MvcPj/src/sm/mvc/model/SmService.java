@@ -1,7 +1,7 @@
 package sm.mvc.model;
 
 import java.util.ArrayList;
-
+import java.util.List;
 import mvc.domain.Board;
 
 public class SmService {
@@ -15,8 +15,14 @@ public class SmService {
 		return instance; 
 	}
 
-	public ArrayList<Board> listS(){
-		return dao.list();
+	public ListResult getListResult(int page, int pageSize){
+		
+		ArrayList<Board> dto = dao.list();
+		Integer totalC = dto.size();
+		long totalCount = totalC.longValue();
+		List<Board> list = (List<Board>) dao.list(page, pageSize);
+
+		return new ListResult(page, totalCount, pageSize, list);
 	}
 	
 	public Board selectConS(int seq){

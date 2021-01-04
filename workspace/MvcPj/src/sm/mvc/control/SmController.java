@@ -46,17 +46,63 @@ public class SmController extends HttpServlet {
 	private void list(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException{
 		
+		String cpStr = request.getParameter("cp");
+		String psStr = request.getParameter("ps");
+		int cp = 1;
+		if(cpStr == null) {
+			Object cpObj = session.getAttribute("cp");
+			if(cpObj != null) {
+				cp = (Integer)cpObj;
+			}
+		}else {
+			cpStr = cpStr.trim();
+			cp = Integer.parseInt(cpStr);
+		}
+		session.setAttribute("cp", cp);
+		
+		int ps = 3;
+		if(psStr == null) {
+			Object psObj = session.getAttribute("ps");
+			if(psObj != null) {
+				ps = (Integer)psObj;
+			}
+		}else {
+			psStr = psStr.trim();
+			int psParam = Integer.parseInt(psStr);
+			
+			Object psObj = session.getAttribute("ps");
+			if(psObj != null) {
+				int psSession = (Integer)psObj;
+				if(psSession != psParam) {
+					cp = 1;
+					session.setAttribute("cp", cp);
+				}
+			}else {
+				if(ps != psParam) {
+					cp = 1;
+					session.setAttribute("cp", cp);
+				}
+			}
+			
+			ps = psParam;
+		}
+		session.setAttribute("ps", ps);
+
 		SmService service = SmService.getInstance();
-		ArrayList<Board> list = service.listS();
-		if(list == null){
+		ListResult listResult = service.getListResult(cp, ps);
+		if(listResult == null){
 			String msg = "sqlException";
 			goMsgAlert(msg, request, response);
 		}
-		request.setAttribute("list", list);
-
-		String view = "list.jsp";
-		RequestDispatcher rd = request.getRequestDispatcher(view);
-		rd.forward(request, response);
+		
+		request.setAttribute("listResult", listResult);
+		if(listResult.getList().size() == 0 && cp>1) {
+			response.sendRedirect("sm.do?cp="+(cp-1));
+		}else {
+			String view = "list.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(view);
+			rd.forward(request, response);
+		}
 	}
 
 	private void selectCon(HttpServletRequest request, HttpServletResponse response)
