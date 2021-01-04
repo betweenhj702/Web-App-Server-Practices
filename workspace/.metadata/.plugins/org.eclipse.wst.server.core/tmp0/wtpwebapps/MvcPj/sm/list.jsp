@@ -1,5 +1,6 @@
-<%@page contentType="text/html;charset=utf-8" import="java.util.*, mvc.domain.Board" %>
-
+<%@page contentType="text/html;charset=utf-8" import="java.util.*, mvc.domain.Board, sm.mvc.vo.ListResult" %>
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset='utf-8'>
 <title>Simple Board with jsp and dbcp in MVC</title>
@@ -13,8 +14,8 @@
 <a href='sm.do?m=write'>글쓰기</a>
 &nbsp;&nbsp;&nbsp;
 <a href='../'>인덱스</a>
+
 <hr width='600' size='2' noshade>
-</center>
 <table border='1' width='600' align='center' cellpadding='2'>
 <tr>
 <th align='center' width='10%'>글번호</th>
@@ -25,28 +26,83 @@
 </tr>
 
 <%
-		ArrayList<Board> list = (ArrayList<Board>) request.getAttribute("list");
-		if( (list.size()) != 0){
-			for(Board dto: list){
-		
+	ListResult listResult = (ListResult) request.getAttribute("listResult");
+	List<Board> list = listResult.getList();
+	if( (list.size() != 0) ){
+		for(Board dto: list){
 %>
-				<tr>
-				<td align='center'><%=dto.getSeq()%></td>
-				<td align='center'><%=dto.getWriter()%></td>
-				<td align='center'><%=dto.getEmail()%></td>
-				<td align='center'>
-				<a href='sm.do?m=selectCon&seq=<%=dto.getSeq()%>'><%=dto.getSubject()%></a>
-				</td>
-				<td align='center'><%=dto.getRdate()%></td>
-				</tr>
+			<tr>
+			<td align='center'><%=dto.getSeq()%></td>
+			<td align='center'><%=dto.getWriter()%></td>
+			<td align='center'><%=dto.getEmail()%></td>
+			<td align='center'>
+			<a href='sm.do?m=selectCon&seq=<%=dto.getSeq()%>'><%=dto.getSubject()%></a>
+			</td>
+			<td align='center'><%=dto.getRdate()%></td>
+			</tr>
+		
 <%
 			}
-		}else{		
 %>
-		<tr>
-			<td align='center' colspan='5'>데이터가 하나도 없음</td>
-		</tr>
+		</table>
+<%			
+	}else{		
+%>
+			<tr>
+				<td align='center' colspan='5'>데이터 없음</td>
+			</tr>
+
+<hr width='600' size='2' color='gray' noshade>
+<%
+	}
+	
+	long totalP = listResult.getTotalPageCount();
+%>
+
+
+<font color='gray' size='3' face='휴먼편지체'>
+    (총페이지수 : <%=totalP%>)
+    &nbsp;&nbsp;&nbsp;
+    
+<%
+	int cp = listResult.getCurrentPage();
+	for(int i=1;i<=totalP;i++){
+		if(i == cp){
+%>
+			<a href="sm.do?cp=<%=i%>">
+				<strong><%=i%></strong>
+			</a>&nbsp;
+<%
+		}else{
+%>
+			<a href="sm.do?cp=<%=i%>">
+				<%=i%>
+			</a>&nbsp;
 <%
 		}
+	}
 %>
+    
+    ( TOTAL : <%=listResult.getTotalCount()%> )
+    
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     페이지 싸이즈 : 
+    <select id="psId" name="ps" onchange="f(this)">
+   		   <option value="3">3</option>
+	       <option value="5">5</option>
+	       <option value="10">10</option>
+    </select>
+    
+    <script language="javascript">
+       function f(select){
+           //var el = document.getElementById("psId");
+           var ps = select.value;
+           //alert("ps : " + ps);
+           location.href="sm.do?ps="+ps;
+       }
+    </script>
+</font>
+<hr width='600' size='2' color='gray' noshade>
+</center>
 </body>
+</html>

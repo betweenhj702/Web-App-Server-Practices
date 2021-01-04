@@ -20,7 +20,7 @@
 		location.href="sm.do";
 	}else if(msg == "insert"){
 		alert("데이터베이스에 입력완료");
-		location.href="sm.do";
+		location.href="sm.do?cp=1";
 	}else if(msg == "update"){
 		alert("수정 완료");
 		location.href="sm.do?m=selectCon&seq=<%=seq%>";
