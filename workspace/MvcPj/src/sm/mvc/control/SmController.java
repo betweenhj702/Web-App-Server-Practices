@@ -1,7 +1,7 @@
 package sm.mvc.control;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -47,7 +47,7 @@ public class SmController extends HttpServlet {
 	}
 	private void list(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException{
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession();
 		String cpStr = request.getParameter("cp");
 		String psStr = request.getParameter("ps");
 		int cp = 1;

@@ -1,4 +1,5 @@
 <%@page contentType="text/html;charset=utf-8" import="java.util.*, mvc.domain.Board, sm.mvc.vo.ListResult" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,16 +82,20 @@
 <%
 		}
 	}
+	int pageS = listResult.getPageSize();
+	
 %>
     
     ( TOTAL : <%=listResult.getTotalCount()%> )
-    
+
+
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      페이지 싸이즈 : 
     <select id="psId" name="ps" onchange="f(this)">
-   		   <option value="3">3</option>
-	       <option value="5">5</option>
-	       <option value="10">10</option>
+    		
+   		   <option value="3"<%=3==(pageS)?"selected":""%>>3</option>
+	       <option value="5"<%=5==(pageS)?"selected":""%>>5</option>
+	       <option value="10"<%=10==(pageS)?"selected":""%>>10</option>
     </select>
     
     <script language="javascript">
