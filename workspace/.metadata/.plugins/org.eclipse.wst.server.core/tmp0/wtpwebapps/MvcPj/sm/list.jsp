@@ -66,7 +66,8 @@
     &nbsp;&nbsp;&nbsp;
     
 <%
-	int cp = listResult.getCurrentPage();
+	//int cp = listResult.getCurrentPage();
+	int cp = (int) session.getAttribute("cp");
 	for(int i=1;i<=totalP;i++){
 		if(i == cp){
 %>
@@ -82,8 +83,8 @@
 <%
 		}
 	}
-	int pageS = listResult.getPageSize();
-	
+	//int pageS = listResult.getPageSize();
+	int pageS = (int) session.getAttribute("ps");
 %>
     
     ( TOTAL : <%=listResult.getTotalCount()%> )

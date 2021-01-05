@@ -66,8 +66,7 @@
     &nbsp;&nbsp;&nbsp;
     
 <%
-	//int cp = listResult.getCurrentPage();
-	int cp = (int) session.getAttribute("cp");
+	int cp = listResult.getCurrentPage();
 	for(int i=1;i<=totalP;i++){
 		if(i == cp){
 %>
