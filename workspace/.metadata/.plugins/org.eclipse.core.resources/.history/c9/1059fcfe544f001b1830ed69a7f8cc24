@@ -1,0 +1,5 @@
+package login.mvc.model;
+
+public class LoginService {
+
+}

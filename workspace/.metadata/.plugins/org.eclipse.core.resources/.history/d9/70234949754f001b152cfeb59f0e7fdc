@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+##returnPage 1: null
+
+        <html>
+		  <head>
+		    <title>로그인 실패</title>
+		  </head>
+		  <body>
+		          <b>로그인 실패</b><br><br>
+				  	<b>
+				  		<c:if test="${!empty email}"> ${email}인 아이디를 가진 회원은 없습니다.</c:if> 
+				  		<c:if test="${!empty pwd}"> ${pwd}는 잘못된 비밀번호입니다.</c:if>
+				  	</b><br><br>
+				  <a href="../">
+				     다시 로그인
+				  </a>
+		
+		  </body>
+		</html>

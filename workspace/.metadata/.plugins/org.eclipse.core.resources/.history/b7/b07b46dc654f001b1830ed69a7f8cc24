@@ -1,0 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+##returnPage 1: null
+
+        <html>
+		  <head>
+		    <title>로그인 실패</title>
+		  </head>
+		  <body>
+		 
+		          <b>로그인 실패</b><br><br>
+				  <b>11
+				  라는 아이디를 가진 회원은 없습니다.</b><br><br>
+				  <a href="../">
+				     다시 로그인
+				  </a>
+		
+		  </body>
+		</html>

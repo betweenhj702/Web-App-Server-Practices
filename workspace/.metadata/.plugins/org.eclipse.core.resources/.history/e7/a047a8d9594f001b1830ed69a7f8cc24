@@ -1,0 +1,18 @@
+package login.mvc.model;
+
+import mvc.domain.Member;
+
+public class LoginService {
+	private LoginDAO dao;
+	private static final LoginService instance = new LoginService();
+	LoginService(){
+		dao = new LoginDAO();
+	}
+	public static LoginService getInstance() {
+		return instance;
+	}
+	
+	public Member checkS() {
+		return null;
+	}
+}

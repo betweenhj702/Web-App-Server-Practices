@@ -6,4 +6,9 @@
     <fullyQualifiedTypeName name="mvc.domain.Board"/>
     <fullyQualifiedTypeName name="sm.mvc.vo.ListResult"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+    <fullyQualifiedTypeName name="login.mvc.model.LoginService"/>
+    <fullyQualifiedTypeName name="mvc.domain.Member"/>
 </qualifiedTypeNameHistroy>

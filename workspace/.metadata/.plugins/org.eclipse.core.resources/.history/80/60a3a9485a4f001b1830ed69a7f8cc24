@@ -1,0 +1,38 @@
+package login.mvc.model;
+
+import java.sql.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import mvc.domain.Member;
+
+class LoginDAO {
+	private DataSource ds;
+	
+	LoginDAO(){
+		try {
+			Context initContext = new InitialContext();
+		    Context envContext  = (Context)initContext.lookup("java:/comp/env");
+		    ds = (DataSource)envContext.lookup("jdbc/myoracle");
+		}catch(NamingException ne) {
+		}
+	}
+	
+	Member check() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			
+		}catch(SQLException se) {
+			
+		}finally {
+			
+		}
+		return null;
+	}
+}

@@ -1,0 +1,12 @@
+package login.mvc.model;
+
+public class LoginService {
+	private LoginDAO dao;
+	private static final LoginService instance = new LoginService();
+	LoginService(){
+		dao = new LoginDAO();
+	}
+	public LoginService getInstance() {
+		return instance;
+	}
+}
