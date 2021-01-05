@@ -11,7 +11,9 @@
 		<h1>MvcPj INDEX(한글)</h1>
 		<p>
 			<a href="addr/addr.do">주소록(MVC)</a><br/>
-		 	<a href="sm/sm.do?cp=1&ps=3">게시판(MVC)</a><br/>
+		 	<a href="sm/sm.do?cp=1&ps=3">게시판(MVC)</a><br/><br/>
+		 	
+		 	<a href="scope/session_test.jsp">세션ID확인</a><br/>
 		</p>
 		</div>
 </body>
