@@ -17,7 +17,8 @@ public class IndexController extends HttpServlet {
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String view = "index.jsp";
 		
-		RequestDispatcher rd = request.getRequestDispatcher(view);
-		rd.forward(request, response);
+		//RequestDispatcher rd = request.getRequestDispatcher(view);
+		//rd.forward(request, response);
+		response.sendRedirect(view);
 	}
 }

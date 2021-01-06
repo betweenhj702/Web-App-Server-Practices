@@ -1,0 +1,99 @@
+package file.mvc.control;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import file.mvc.model.FileSet;
+
+
+@WebServlet("/file/file.do")
+public class FileController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	private String m="";
+	public void service(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		m = request.getParameter("m");
+		if(m != null) {
+			m = m.trim();
+			switch(m) {
+				case "form": form(request, response); break; 
+				case "upload": upload(request, response); break; 
+				case "list": list(request, response); break;
+				case "del": del(request, response); break;
+				case "download": download(request, response); break;
+				default: list(request, response); break;
+			}
+		}else {
+			list(request, response);
+		}
+		
+	}
+	
+	public void form(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		String view = "form.jsp";
+		response.sendRedirect(view);
+	}
+	public void upload(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		File fSaveDir = new File(FileSet.FILE_DIR);
+		if(!fSaveDir.exists()) fSaveDir.mkdirs();
+		
+		MultipartRequest mr = new MultipartRequest(request,
+                FileSet.FILE_DIR,
+                1*1024*1024,
+                "utf-8",
+                new DefaultFileRenamePolicy());
+		
+		String writer = mr.getParameter("writer");
+		String fname = mr.getFilesystemName("fname");
+		String ofname =mr.getOriginalFileName("fname");
+		System.out.println(
+			"# writer: "+ writer + ", fname: "+fname+", ofname: " + ofname);
+		
+		String view = "file.do";
+		response.sendRedirect(view);
+	}
+	public void list(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		File f = new File(FileSet.FILE_DIR);
+		File kids[] = f.listFiles();
+	    ArrayList<File> fList = new ArrayList<File>();
+	    for(File kid: kids) fList.add(kid);
+		request.setAttribute("fList", fList);
+		
+		String view = "list.jsp";
+		RequestDispatcher rd = request.getRequestDispatcher(view);
+		rd.forward(request, response);
+	}
+	public void del(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		String fname =request.getParameter("fname");
+		if(fname != null) fname = fname.trim();
+		File f = new File(FileSet.FILE_DIR, fname);
+		if(f.exists()) f.delete();
+		
+		String view = "file.do";
+		response.sendRedirect(view);
+	}
+	public void download(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		//클라이언트 PC에 다운로드 되도록 로직을 추가하시오 
+	}
+}
+
+
+
+

@@ -42,8 +42,9 @@ class SmDAO
 				String email = rs.getString(3);
 				String subject = rs.getString(4);
 				Date rdate = rs.getDate(6);
-				
-				Board dto = new Board(seq, writer, email, subject, rdate);
+				String fname = rs.getString("FNAME");
+				Board dto = new Board(seq, writer, email, subject, null, rdate, fname,
+						null, -1);
 				list.add(dto);
 			}
 		}catch(SQLException se){
@@ -77,8 +78,9 @@ class SmDAO
 				String email = rs.getString(4);
 				String subject = rs.getString(5);
 				Date rdate = rs.getDate(7);
-				
-				Board dto = new Board(seq, writer, email, subject, rdate);
+				String fname = rs.getString("fname");
+				Board dto = new Board(seq, writer, email, subject, null, rdate, fname,
+						null, -1);
 				list.add(dto);
 			}
 		}catch(SQLException se){
@@ -110,8 +112,12 @@ class SmDAO
 			String email = rs.getString(3);
 			String subject = rs.getString(4);
 			String content = rs.getString(5);
-
-			dto = new Board(seq, writer, email, subject, content);
+			Date rdate = rs.getDate("RDATE"); 
+			String fname = rs.getString("FNAME");
+			String ofname = rs.getString("OFNAME");
+			long fsize = rs.getLong("FSIZE");
+			dto = new  Board(seq, writer, email, subject, content, rdate, fname,
+					ofname, fsize);
 			return dto;
 		}catch(SQLException se){
 			return null;
@@ -159,6 +165,10 @@ class SmDAO
 			pstmt.setString(2, dto.getEmail());
 			pstmt.setString(3, dto.getSubject());
 			pstmt.setString(4, dto.getContent());
+			pstmt.setString(5, dto.getFname());
+			pstmt.setString(6, dto.getOfname());
+			pstmt.setLong(7, dto.getFsize());
+			
 			result = pstmt.executeUpdate();
 			return result;
 		}catch(SQLException se){
@@ -173,9 +183,9 @@ class SmDAO
 	}
 
 	Board selUpCon(int seq){
-		Board dto=null;
-		Connection con=null;
-		PreparedStatement pstmt=null;
+		Board dto = null;
+		Connection con = null;
+		PreparedStatement pstmt= null;
 		ResultSet rs = null;
 		String sql = CONTENT;
 		try{
@@ -188,7 +198,12 @@ class SmDAO
 			String email = rs.getString(3);
 			String subject = rs.getString(4);
 			String content = rs.getString(5);
-			dto = new Board(seq, writer, email, subject, content);
+			Date rdate = rs.getDate("RDATE"); 
+			String fname = rs.getString("FNAME");
+			String ofname = rs.getString("OFNAME");
+			long fsize = rs.getLong("FSIZE");
+			dto = new  Board(seq, writer, email, subject, content, rdate, fname,
+					ofname, fsize);
 			return dto;
 		}catch(SQLException se){
 			return null;
@@ -197,8 +212,7 @@ class SmDAO
 				if(rs != null) rs.close();
 				if(pstmt != null) pstmt.close();
 				if(con != null) con.close();
-			}catch(SQLException se){
-			}
+			}catch(SQLException se){}
 		}
 		
 	}
@@ -215,7 +229,10 @@ class SmDAO
 			pstmt.setString(2, dto.getEmail());
 			pstmt.setString(3, dto.getSubject());
 			pstmt.setString(4, dto.getContent());
-			pstmt.setInt(5, dto.getSeq());
+			pstmt.setString(5, dto.getFname());
+			pstmt.setString(6, dto.getOfname());
+			pstmt.setLong(7, dto.getFsize());
+			pstmt.setInt(8, dto.getSeq());
 			result = pstmt.executeUpdate();
 			return result;
 		}catch(SQLException se){

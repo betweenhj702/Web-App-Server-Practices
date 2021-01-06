@@ -22,7 +22,7 @@ public class LoginController extends HttpServlet {
 	public void service(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String m = request.getParameter("m");
-		System.out.println("???");
+		
 		if(m != null) {
 			m = m.trim();
 			if(m.equals("form")) {
@@ -33,7 +33,7 @@ public class LoginController extends HttpServlet {
 				logout(request, response);
 			}
 		}else {
-			response.sendRedirect("../");
+			response.sendRedirect("../index.do");
 		}
 	}
 	private void form(HttpServletRequest request, HttpServletResponse response) 
@@ -66,17 +66,19 @@ public class LoginController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("member", member);
 			
-			String view = "../index.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(view);
-			rd.forward(request, response);
+			String view = "../index.do";
+			response.sendRedirect(view);
+			//RequestDispatcher rd = request.getRequestDispatcher(view);
+			//rd.forward(request, response);
 		}
 		
 	}
 	private void logout(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		session.removeAttribute("member");
-		String view = "../";
+		session.removeAttribute("member"); //1
+		session.invalidate();//2 세션 자체를 무효화시킴
+		String view = "../index.do";
 		response.sendRedirect(view);
 	}
 }

@@ -26,6 +26,7 @@ public class LoginService {
 			return member;
 		}
 		//비번까지 맞음
+		member.setPwd(null); //비번은 지워서 보내자!!! 보안성
 		member.setFlag(true);
 		return member;
 	}
